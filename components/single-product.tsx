@@ -2,11 +2,12 @@ import { Pricing } from "#/components/pricing";
 import type { Product } from "#/types/product";
 import { ProductRating } from "#/components/product-rating";
 import Image from "next/image";
+import { withDelay } from "#/lib/delay";
 
-export async function SingleProduct() {
-  const product: Product = await fetch(
-    `https://app-router-api.vercel.app/api/products?id=1`
-  ).then((res) => res.json());
+export async function SingleProduct({ id = 1 }: { id?: number }) {
+  const product: Product = await withDelay(fetch(
+    `https://app-router-api.vercel.app/api/products?id=${id}`
+  ).then((res) => res.json()), 3000);
 
   return (
     <div className="grid grid-cols-4 gap-6">
